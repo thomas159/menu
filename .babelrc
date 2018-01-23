@@ -1,0 +1,11 @@
+{
+  "presets": ["react", "env", "stage-0"],
+  "plugins": [
+    "babel-plugin-styled-components",
+    "react-hot-loader/babel",
+    "transform-object-rest-spread",
+    "transform-decorators",
+    "transform-es2015-spread",
+    "transform-class-properties"
+  ]
+}

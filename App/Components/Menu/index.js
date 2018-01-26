@@ -1,37 +1,17 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { number } from 'prop-types'
+// import MediaQuery from 'react-responsive';
+import Container from '../atoms/Container'
 import Logo from '../../Images/sinus_logo.png'
 import ThirdLevel from '../ThirdLevel'
 import { media } from '../atoms/Media'
 import * as palette from '../../variables'
 
-
 const Wrap = styled.div`
   display: flex;
   position: relative;
-  flex-direction: column;
   width: 100%;
-  ${media.desktop`
-    flex-direction: row;
-  `}
-`
-
-const Cell = styled.div`
-  display: flex;
-  flex: 0 0 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  border-top: 1px solid ${palette.orange};
-  border-bottom: 1px solid ${palette.orange};
-  ${media.desktop`
-    flex: 0 0 auto;
-  `}
-  &:hover {
-    cursor: pointer;
-    color: ${palette.orange}
-  }
 `
 
 const CatImg = styled.img`
@@ -45,60 +25,120 @@ const CatName = styled.span`
   padding: 0 0 0 10px;
 `
 
-const SubMenuWrap = styled.div`
-  display: flex;
-  flex: 0 0 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid ${palette.border};
-  &:hover {
-    cursor: pointer;
-    color: ${palette.orange}
-  }
-`
-
 // SecondLevel Styles
 
+const SecondLevelWrap = styled.div`
+  width:100%
+`
+
+const TabWrap = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  ${media.desktop`
+    flex-direction: row;
+  `}
+`
+
+const TabCell = styled.div`
+  display: flex;
+  flex: 0 0 100%;
+  padding: 10px 0;
+  height:50px;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.2;
+  ${media.desktop`
+  flex: 0 0 20%;
+  padding: 10px 10px 0 0;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  line-height: 1;
+  `}
+`
+
+const Tab = styled.button`
+  width: 100%;
+  outline: 0;
+  border: 0;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.2;
+  border-bottom: 1px solid ${palette.orange};
+  ${media.desktop`
+    border-top: 1px solid ${palette.border};
+    border-right: 1px solid ${palette.border};
+    border-bottom: 0px;
+  `}
+`
+
+const ThirdLevelWrapMobile = styled.div`
+  width: 100%;
+  ${media.desktop`
+    display: none;
+  `}
+
+`
+const ThirdLevelWrapDesktop = styled.div`
+  width: 100%;
+  display: none;
+  ${media.desktop`
+    display: block;
+  `}
+`
+
 export default class Menu extends Component {
-
-  // static propTypes = {
-  //   firstLevelState: number,
-  // }
-
   render() {
-    const SecondLevel = ({ handleSecondLevel, menuItems, secondLevelState }) => (
-      <div>
-        {
-          menuItems.map(cat =>
-            <div key={cat.id}>
-              <SubMenuWrap
-                key={cat.id}
-                onClick={() => handleSecondLevel(cat.id)}
-              >
-                {cat.name}
-              </SubMenuWrap>
-              {console.log(secondLevelState)}
-              {
-                secondLevelState === cat.id &&
-                <div>
-                  <ThirdLevel subItems={cat.subItems} />
-                </div>
-              }
-            </div>,
-        )}
-      </div>
+    const SecondLevel = ({ handleSecondLevel, firstLevelState, menuItems, secondLevelState }) => (
+      <SecondLevelWrap>
+        <Container>
+          <TabWrap>
+            {
+              menuItems.map(cat =>
+                <div style={{ width: '100%' }}>
+                  <TabCell>
+                    <Tab
+                      key={cat.id}
+                      onClick={() => handleSecondLevel(cat.id)}
+                    >
+                      {cat.name}
+                    </Tab>
+                  </TabCell>
+                  { secondLevelState === cat.id &&
+                  <ThirdLevelWrapMobile>
+                    <ThirdLevel
+                      subItems={cat.subItems}
+                      secondLevelState={secondLevelState}
+                      firstLevelState={firstLevelState}
+                    />
+                  </ThirdLevelWrapMobile>
+                  }
+                </div>,
+              )}
+          </TabWrap>
+        </Container>
+        <div>
+          {
+            menuItems.map(cat =>
+            secondLevelState === cat.id &&
+            <ThirdLevelWrapDesktop>
+              <ThirdLevel
+                subItems={cat.subItems}
+                secondLevelState={secondLevelState}
+                firstLevelState={firstLevelState}
+              />
+            </ThirdLevelWrapDesktop>,
+          )}
+        </div>
+      </SecondLevelWrap>
     )
 
     return (
       <Wrap>
-        {console.log(this.props.firstLevelState)}
-        <Cell onClick={() => this.props.handleFirstLevel(1)}>
-          <CatImg src="https://plissee-jalousien-rollos.de/media/icons/menu/MainNavIcons_plissee.png" />
-          <CatName>Plissee</CatName>
-        </Cell>
         {
-          this.props.firstLevelState === 1 &&
+          this.props.firstLevelState === 'plissee' &&
           <SecondLevel
             menuItems={this.props.menuItems}
             handleFirstLevel={this.props.handleFirstLevel}
@@ -107,12 +147,9 @@ export default class Menu extends Component {
             secondLevelState={this.props.secondLevelState}
           />
         }
-        <Cell onClick={() => this.props.handleFirstLevel(2)}>
-          <CatImg src="https://plissee-jalousien-rollos.de/media/icons/menu/MainNavIcons_rollo.png" />
-          <CatName>Rollos</CatName>
-        </Cell>
+
         {
-          this.props.firstLevelState === 2 &&
+          this.props.firstLevelState === 'rollos' &&
           <SecondLevel
             menuItems={this.props.menuItems}
             handleFirstLevel={this.props.handleFirstLevel}

@@ -1,51 +1,93 @@
 import React from 'react'
-import { bool, func } from 'prop-types'
+import { func } from 'prop-types'
 import styled from 'styled-components'
+import Categories from '../Categories'
 import Logo from '../../Images/sinus_logo.png'
 import { media } from '../atoms/Media'
+import * as palette from '../../variables'
 
 const Wrap = styled.div`
+  display:flex;
+  flex-wrap: wrap;
   position: relative;
   width: 100%;
   height: auto;
-  padding: 0 20px;
+  padding: 10px;
   text-align: center;
+  align-items: center;
 `
 
 const LogoImg = styled.img`
   width: auto;
-  max-height: 80px;
+  max-height: 60px;
 `
 
-const Hamburger = styled.div`
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  top: 20px;
-  right: 20px;
-  background: papayawhip;
-  ${media.desktop`
-    display:none
+const Cell = styled.div`
+  &:nth-child(1) {
+    flex: 0 0 100%;
+    ${media.desktop`
+      flex: 0 0 auto;
+    `}
+  }
+  &:nth-child(2) {
+    flex: 0 0 100%;
+    ${media.desktop`
+      flex: 1;
+    `}
+  }
+`
+
+const MenuItems = styled.div`
+  width: 100%;
+   ${media.desktop`
+     width: calc(100% - 135px)
   `}
 `
 
-const TopMenu = ({ handleOpenNav, openNav }) => (
+const Close = styled.div`
+  position:absolute;
+  display: flex;
+  top: 30px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${palette.orange};
+  color: ${palette.orange};
+  border-radius: 100%;
+  z-index: 1;
+`
+
+const TopMenu = ({ handleFirstLevel, firstLevelState }) => (
   <Wrap>
-    <LogoImg src={Logo} />
-    <Hamburger onClick={handleOpenNav}>
-      { openNav ? <div>bbjsadbsd</div> : <div>ddddadssad</div> }
-    </Hamburger>
+    <Cell>
+      <LogoImg src={Logo} />
+      {
+        firstLevelState &&
+        <Close
+          onClick={() => handleFirstLevel('')}
+        > x
+        </Close>
+      }
+    </Cell>
+    <Cell>
+      <MenuItems>
+        <Categories handleFirstLevel={handleFirstLevel} />
+      </MenuItems>
+    </Cell>
   </Wrap>
 )
 
 TopMenu.propTypes = {
-  handleOpenNav: func,
-  openNav: bool,
+  handleFirstLevel: func,
+  firstLevelState: func,
 }
 
 TopMenu.defaultProps = {
-  handleOpenNav: func,
-  openNav: bool,
+  handleFirstLevel: func,
+  firstLevelState: func,
 }
 
 export default TopMenu

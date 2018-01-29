@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { number } from 'prop-types'
 // import MediaQuery from 'react-responsive';
 import Container from '../atoms/Container'
-import Logo from '../../Images/sinus_logo.png'
 import ThirdLevel from '../ThirdLevel'
 import { media } from '../atoms/Media'
 import * as palette from '../../variables'
@@ -35,52 +34,82 @@ const TabWrap = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  padding: 0 0 0 0;
   ${media.desktop`
     flex-direction: row;
   `}
+`
+const TabBig = styled.button`
+width: 100%;
+outline: 0;
+border: 0;
+height: 100%;
+padding: 5px;
+justify-content: center;
+align-items: center;
+line-height: 0.2;
+border-bottom: 1px solid ${palette.orange};
+
+${({ active }) => active && `
+  border-top: 1px solid ${palette.orange};
+  border-right: 1px solid ${palette.orange};
+  border-left: 1px solid ${palette.orange};
+  border-bottom: 0px solid ${palette.orange};
+`}
+`
+
+const Tab = styled.button`
+width: 100%;
+outline: 0;
+border: 0;
+height: 100%;
+justify-content: center;
+align-items: center;
+line-height: 0.2;
+
+${({ active }) => active && `
+  border-top: 1px solid ${palette.border};
+  border-right: 1px solid ${palette.border};
+`}
+`
+
+const TabInner = styled.div`
+  width: 100%;
+  &:nth-child(1) ${TabBig} {
+    padding: 5px 5px 5px 0;
+  }
+  &:nth-child(5) ${TabBig} {
+    padding: 5px 0px 5px 5px;
+  }
 `
 
 const TabCell = styled.div`
   display: flex;
   flex: 0 0 100%;
-  padding: 10px 0;
-  height:50px;
+  padding: 0;
+  height: 50px;
   justify-content: center;
   align-items: center;
   line-height: 0.2;
+
+
   ${media.desktop`
-  flex: 0 0 20%;
-  padding: 10px 10px 0 0;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  line-height: 1;
+    flex: 0 0 20%;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    line-height: 1;
   `}
 `
 
-const Tab = styled.button`
-  width: 100%;
-  outline: 0;
-  border: 0;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  line-height: 0.2;
-  border-bottom: 1px solid ${palette.orange};
-  ${media.desktop`
-    border-top: 1px solid ${palette.border};
-    border-right: 1px solid ${palette.border};
-    border-bottom: 0px;
-  `}
-`
 
 const ThirdLevelWrapMobile = styled.div`
   width: 100%;
   ${media.desktop`
     display: none;
   `}
-
 `
+
 const ThirdLevelWrapDesktop = styled.div`
   width: 100%;
   display: none;
@@ -90,6 +119,14 @@ const ThirdLevelWrapDesktop = styled.div`
 `
 
 export default class Menu extends Component {
+  state = {
+    active: 1,
+  }
+
+  handleButton = (id) => {
+    this.setState({ active: id })
+  }
+
   render() {
     const SecondLevel = ({ handleSecondLevel, firstLevelState, menuItems, secondLevelState }) => (
       <SecondLevelWrap>
@@ -97,14 +134,20 @@ export default class Menu extends Component {
           <TabWrap>
             {
               menuItems.map(cat =>
-                <div style={{ width: '100%' }}>
+                <TabInner>
                   <TabCell>
+                    <TabBig
+                      onClick={() => this.handleButton(cat.id)}
+                      active={this.state.active === cat.id}
+                    >
                     <Tab
+                      active={this.state.active !== cat.id}
                       key={cat.id}
                       onClick={() => handleSecondLevel(cat.id)}
                     >
                       {cat.name}
                     </Tab>
+                    </TabBig>
                   </TabCell>
                   { secondLevelState === cat.id &&
                   <ThirdLevelWrapMobile>
@@ -115,7 +158,7 @@ export default class Menu extends Component {
                     />
                   </ThirdLevelWrapMobile>
                   }
-                </div>,
+                </TabInner>,
               )}
           </TabWrap>
         </Container>

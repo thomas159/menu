@@ -8,9 +8,6 @@ import * as palette from '../../variables'
 
 const Wrap = styled.div`
   border-bottom: 1px solid ${palette.border};
-  flex-direction: row;
-  display: flex;
-  flex-wrap: wrap;
 `
 
 const Cell = styled.div`
@@ -20,6 +17,9 @@ const Cell = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 10px;
+  ${media.tablet`
+  flex: 0 0 33.33%;
+`}
   ${media.desktop`
     flex: 0 0 25%;
   `}
@@ -29,23 +29,24 @@ const Cell = styled.div`
 `
 
 const RaumCell = styled.div`
-display: flex;
-flex: 0 0 100%;
-cursor: pointer;
-justify-content: center;
-flex-direction: column;
-padding: 10px;
-${media.tablet`
-  flex: 0 0 50%;
-`}
-${media.desktop`
-  flex: 0 0 33.33%;
-`}
-&:hover {
-  ${props => props.orange && css` color: ${palette.orange}; `}
-  ${props => props.blue && css` color: ${palette.blue}; `}
-}
+  display: flex;
+  flex: 0 0 100%;
+  cursor: pointer;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  ${media.tablet`
+    flex: 0 0 50%;
+  `}
+  ${media.desktop`
+    flex: 0 0 33.33%;
+  `}
+  &:hover {
+    ${props => props.orange && css` color: ${palette.orange}; `}
+    ${props => props.blue && css` color: ${palette.blue}; `}
+  }
 `
+
 const ImgWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -72,30 +73,37 @@ const Random = styled.div`
   width: 100%;
 `
 
-
 export default class ThirdLevel extends React.Component {
   render() {
     const CellRaum = ({ firstLevelState, subItems }) => (
       <Wrap>
-        <Container>
+        <Random>
           {
             subItems.map(item =>
               <RaumCell>
-                <ImgWrap>
-                  {
-                    firstLevelState === 'plissee' ? <Img src={item.imgPlissee} /> : <Img src={item.imgRollos} />
-                  }
-                </ImgWrap>
                 {
-                  firstLevelState === 'plissee' ? <Label orange>{item.name}</Label> : <Label blue>{item.name}</Label>
+                  firstLevelState === 'plissee' &&
+                  <div>
+                    <ImgWrap>
+                      <Img src={item.imgPlissee} />
+                    </ImgWrap>
+                    <Label orange>{item.name}</Label>
+                    <Desc>{item.desc}</Desc>
+                  </div>
                 }
-                <Desc>{item.desc}</Desc>
                 {
-                  firstLevelState === 'plissee' ? <Link>Plissee</Link> : <Link> Rollos</Link>
+                  firstLevelState === 'rollos' &&
+                  <div>
+                    <ImgWrap>
+                      <Img src={item.imgRollos} />
+                    </ImgWrap>
+                    <Label orange>{item.name}</Label>
+                    <Desc>{item.desc}</Desc>
+                  </div>
                 }
               </RaumCell>,
           )}
-        </Container>
+        </Random>
       </Wrap>
     )
 

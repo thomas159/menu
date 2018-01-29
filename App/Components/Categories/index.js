@@ -28,7 +28,11 @@ const Cell = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 0 30px;
+  padding: 0 40px;
+  height: 50px;
+  &:nth-child(1) {
+    border-right: 1px solid ${palette.orange};
+  }
   ${media.desktop`
     flex: 0 0 auto;
     justify-content: left;
@@ -39,11 +43,11 @@ const Cell = styled.div`
 `
 
 const CatCircle = styled.span`
-width: 50px;
-height: 50px;
-border-radius: 50%;
-${props => props.orange && css` border: 1px solid ${palette.orange};`}
-${props => props.blue && css` border: 1px solid ${palette.blue}; `}
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  ${props => props.orange && css` border: 1px solid ${palette.orange};`}
+  ${props => props.blue && css` border: 1px solid ${palette.blue}; `}
 `
 
 const CatImg = styled.img`

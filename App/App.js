@@ -1,13 +1,10 @@
 import React from 'react'
-import Navigation from './Components/Navigation'
 import 'sanitize.css'
+import Navigation from './Components/Navigation'
+
+
 class App extends React.Component {
-
-  constructor () {
-    super()
-  }
-
-  render () {
+  render() {
     return (
       <div>
         <Navigation />
@@ -16,4 +13,4 @@ class App extends React.Component {
   }
 }
 
-export { App }
+export default App

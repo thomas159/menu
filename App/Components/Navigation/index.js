@@ -15,20 +15,13 @@ const Wrap = styled.nav`
 export default class Navigation extends Component {
   state = {
     firstLevel: '',
-    secondLevel: '',
-    // active: false,
+    secondLevel: 1,
   }
-
-  // handleOpenNav = () => {
-  //   this.setState(prevstate =>
-  //     ({ openNav: !prevstate.openNav }))
-  // }
 
   handleFirstLevel = (cat) => {
     this.setState(prevState => ({
         //if same then reset otherwise assign new id
         firstLevel: prevState.firstLevel === cat ? false : cat,
-
     }))
   }
 
@@ -36,7 +29,6 @@ export default class Navigation extends Component {
     this.setState(prevState => ({
       //if same then reset otherwise assign new id
       secondLevel: prevState.secondLevel === id ? false : id,
-      // active: true
     }))
   }
 

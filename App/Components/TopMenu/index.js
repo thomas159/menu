@@ -45,7 +45,7 @@ const MenuItems = styled.div`
 `
 
 const Close = styled.div`
-  position:absolute;
+  position: absolute;
   display: flex;
   top: 30px;
   right: 20px;

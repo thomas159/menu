@@ -7,7 +7,9 @@ import { media } from '../atoms/Media'
 import * as palette from '../../variables'
 
 const Wrap = styled.div`
+  ${media.desktop`
   border-bottom: 1px solid ${palette.border};
+  `}
 `
 
 const Cell = styled.div`
@@ -16,10 +18,10 @@ const Cell = styled.div`
   cursor: pointer;
   justify-content: center;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px;
   ${media.tablet`
-  flex: 0 0 33.33%;
-`}
+    flex: 0 0 33.33%;
+  `}
   ${media.desktop`
     flex: 0 0 25%;
   `}
@@ -34,7 +36,7 @@ const RaumCell = styled.div`
   cursor: pointer;
   justify-content: center;
   flex-direction: column;
-  padding: 10px;
+  padding: 25px 10px;
   ${media.tablet`
     flex: 0 0 50%;
   `}
@@ -64,13 +66,22 @@ const Desc = styled.div`
 `
 
 const Link = styled.a`
-  color: #ff00ff;
+  color: #000;
+  &:hover {
+    ${props => props.orange && css` color: ${palette.orange}; `}
+    ${props => props.blue && css` color: ${palette.blue}; `}
+  }
 `
 
 const Random = styled.div`
   display:flex;
   flex-wrap: wrap;
-  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid ${palette.orange};
+  ${media.desktop`
+    border-top: 0px solid ${palette.orange};
+  `}
 `
 
 export default class ThirdLevel extends React.Component {
@@ -97,7 +108,7 @@ export default class ThirdLevel extends React.Component {
                     <ImgWrap>
                       <Img src={item.imgRollos} />
                     </ImgWrap>
-                    <Label orange>{item.name}</Label>
+                    <Label blue>{item.name}</Label>
                     <Desc>{item.desc}</Desc>
                   </div>
                 }
@@ -111,20 +122,20 @@ export default class ThirdLevel extends React.Component {
       <Cell>
         {
           firstLevelState === 'plissee' &&
-          <Link src={item.linkPlissee}>
+          <Link orange src={item.linkPlissee}>
             <ImgWrap>
               <Img src={item.imgPlissee} />
             </ImgWrap>
-            <Label orange>{item.namePlissee}</Label>
+            <Label>{item.namePlissee}</Label>
           </Link>
         }
         {
           firstLevelState === 'rollos' &&
-          <Link src={item.linkRollos}>
+          <Link blue src={item.linkRollos}>
             <ImgWrap>
               <Img src={item.imgRollos} />
             </ImgWrap>
-            <Label orange>{item.nameRollos}</Label>
+            <Label>{item.nameRollos}</Label>
           </Link>
         }
       </Cell>
@@ -155,8 +166,10 @@ export default class ThirdLevel extends React.Component {
 
     return (
       <div>
-        { this.props.secondLevelState === 3
-        ? <CellRaum
+        {
+          this.props.secondLevelState === 3
+        ?
+          <CellRaum
             subItems={this.props.subItems}
             firstLevelState={this.props.firstLevelState}
           />

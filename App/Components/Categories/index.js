@@ -20,6 +20,7 @@ const InnerWrap = styled.div`
   display: flex;
   flex: 0 0 auto;
   flex-direction: row;
+  align-items: center;
 `
 
 const Cell = styled.div`

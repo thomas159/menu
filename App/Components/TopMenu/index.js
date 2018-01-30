@@ -7,7 +7,7 @@ import { media } from '../atoms/Media'
 import * as palette from '../../variables'
 
 const Wrap = styled.div`
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   position: relative;
   width: 100%;
@@ -46,7 +46,6 @@ const MenuItems = styled.div`
 
 const Close = styled.div`
   position: absolute;
-  display: flex;
   top: 30px;
   right: 20px;
   width: 30px;
@@ -58,6 +57,10 @@ const Close = styled.div`
   color: ${palette.orange};
   border-radius: 100%;
   z-index: 1;
+  display: none;
+  ${media.desktop`
+     display: flex;
+  `}
 `
 
 const TopMenu = ({ handleFirstLevel, firstLevelState }) => (
@@ -68,7 +71,8 @@ const TopMenu = ({ handleFirstLevel, firstLevelState }) => (
         firstLevelState &&
         <Close
           onClick={() => handleFirstLevel('')}
-        > x
+        >
+        x
         </Close>
       }
     </Cell>

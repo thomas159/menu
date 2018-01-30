@@ -23,11 +23,10 @@ const CatName = styled.span`
   height: auto;
   padding: 0 0 0 10px;
 `
-
 // SecondLevel Styles
 
 const SecondLevelWrap = styled.div`
-  width:100%
+  width: 100%
 `
 
 const TabWrap = styled.div`
@@ -35,46 +34,63 @@ const TabWrap = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 0 0 0 0;
+  border-bottom: 1px solid ${palette.orange};
   ${media.desktop`
     flex-direction: row;
+    border-bottom: 0px solid ${palette.orange};
   `}
 `
-const TabBig = styled.button`
-width: 100%;
-outline: 0;
-border: 0;
-height: 100%;
-padding: 5px;
-justify-content: center;
-align-items: center;
-line-height: 0.2;
-border-bottom: 1px solid ${palette.orange};
 
-${({ active }) => active && `
-  border-top: 1px solid ${palette.orange};
-  border-right: 1px solid ${palette.orange};
-  border-left: 1px solid ${palette.orange};
-  border-bottom: 0px solid ${palette.orange};
-`}
+const TabBig = styled.button`
+  width: 100%;
+  outline: 0;
+  border: 0;
+  height: 100%;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.2;
+  z-index: 1;
+  ${media.desktop`
+  flex-direction: row;
+  border-bottom: 1px solid ${palette.orange};
+    ${({ active }) => active && `
+      border-top: 1px solid ${palette.orange};
+      border-right: 1px solid ${palette.orange};
+      border-left: 1px solid ${palette.orange};
+      border-bottom: 0px solid ${palette.orange};
+    `}
+  `}
 `
 
 const Tab = styled.button`
-width: 100%;
-outline: 0;
-border: 0;
-height: 100%;
-justify-content: center;
-align-items: center;
-line-height: 0.2;
-
-${({ active }) => active && `
-  border-top: 1px solid ${palette.border};
-  border-right: 1px solid ${palette.border};
-`}
+  width: 100%;
+  outline: 0;
+  border: 0;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.2;
+  cursor: pointer;
+  ${({ active }) => active && `
+      border-top: 0px solid ${palette.border};
+      border-right: 0px solid ${palette.border};
+    `}
+  ${media.desktop`
+    flex-direction: row;
+    ${({ active }) => active && `
+      border-top: 1px solid ${palette.border};
+      border-right: 1px solid ${palette.border};
+    `}
+  `}
 `
 
 const TabInner = styled.div`
   width: 100%;
+  border-top: 1px solid ${palette.orange};
+  ${media.desktop`
+    border-top: 0px solid ${palette.orange};
+  `}
   &:nth-child(1) ${TabBig} {
     padding: 5px 5px 5px 0;
   }
@@ -91,8 +107,6 @@ const TabCell = styled.div`
   justify-content: center;
   align-items: center;
   line-height: 0.2;
-
-
   ${media.desktop`
     flex: 0 0 20%;
     justify-content: center;
@@ -101,7 +115,6 @@ const TabCell = styled.div`
     line-height: 1;
   `}
 `
-
 
 const ThirdLevelWrapMobile = styled.div`
   width: 100%;
